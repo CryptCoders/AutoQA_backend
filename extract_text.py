@@ -3,11 +3,10 @@ from PyPDF2 import PdfReader
 def extract(file):
     try:
         pdf_reader = PdfReader(file)
-        text = ''
+        text = []
 
         for page in range(len(pdf_reader.pages)):
-            text += " ".join(pdf_reader.pages[page].extract_text().split())
-            break
+            text.append(" ".join(pdf_reader.pages[page].extract_text().split()))
 
         return text
     except Exception as e:

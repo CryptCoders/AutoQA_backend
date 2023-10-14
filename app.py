@@ -10,7 +10,10 @@ class GenerateQuestionAnswer(Resource):
     def post(self, num_questions):
         file = request.files.get('file')
         text = extract_text.extract(file)
-        questions_and_answers = get_question_answer.get_qa(text, num_questions)
+
+        questions_and_answers = []
+        for page_text in text:
+            questions_and_answers.extend(get_question_answer.get_qa(page_text, num_questions))
 
         for qa_pair in questions_and_answers:
             if type(qa_pair['answer']) == list:
