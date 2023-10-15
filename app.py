@@ -1,9 +1,18 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
+from flask_cors import CORS
 import extract_text
 import get_question_answer
 
 app = Flask(__name__)
+# config = {
+#     "origins": ['http://127.0.0.1:5173'],
+#     "methods": ['GET', 'POST'],
+#     "allow_headers": ['Content-Type']
+# }
+# CORS(app, resources={r'*': config})
+# app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'txt', 'png', 'jpeg'}
+CORS(app)
 api = Api(app)
 
 class GenerateQuestionAnswer(Resource):
