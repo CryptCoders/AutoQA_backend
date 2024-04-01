@@ -1,29 +1,18 @@
-from flask import Flask, jsonify, request
-from flask_restful import Resource, Api
-import extract_text
-import get_question_answer
+from flask import Flask
+from flask_restful import Api
+from flask_cors import CORS
+from controllers.generateQuestionAnswer import GenerateQuestionAnswer
+from controllers.generateBriefAnswer import GenerateBriefAnswer
+from dotenv import load_dotenv
+
+load_dotenv('.env')
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
-class GenerateQuestionAnswer(Resource):
-    def post(self, num_questions):
-        file = request.files.get('file')
-        text = extract_text.extract(file)
-
-        questions_and_answers = []
-        for page_text in text:
-            questions_and_answers.extend(get_question_answer.get_qa(page_text, num_questions))
-
-        for qa_pair in questions_and_answers:
-            if type(qa_pair['answer']) == list:
-                qa_pair['type'] = 'mcq'
-            else:
-                qa_pair['type'] = 'sentence'
-
-        return jsonify({'data': questions_and_answers})
-
 api.add_resource(GenerateQuestionAnswer, '/generate-question-answer/<int:num_questions>')
+api.add_resource(GenerateBriefAnswer, '/generate-brief-answer/<int:level>')
 
 if __name__ == '__main__':
     app.run(debug = True)

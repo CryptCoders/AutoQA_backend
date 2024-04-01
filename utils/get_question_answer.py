@@ -1,4 +1,4 @@
-from question_answering import QuestionGenerator
+from utils.question_answering import QuestionGenerator
 
 def get_qa(text, questions):
     qg = QuestionGenerator()
