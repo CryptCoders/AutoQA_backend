@@ -9,7 +9,7 @@ def correctFormat(xml_string):
         xml_arr.pop()
 
     if "</questions>" not in xml_arr[-1]:
-        xml_arr.push("</questions>")
+        xml_arr.append("</questions>")
 
     return "\n".join(xml_arr)
 
