@@ -1,5 +1,4 @@
 import google.generativeai as genai
-import json
 from xmltodict import parse
 import re
 

@@ -1,23 +1,19 @@
-import nltk, string, math
-from sklearn.feature_extraction.text import TfidfVectorizer
+import math, spacy
+import numpy as np
+from fuzzywuzzy import fuzz
 
-nltk.download('punkt')
+nlp = spacy.load("en_core_web_lg")
 
-lemmatizer = nltk.stem.WordNetLemmatizer()
-remove_punctuation_map = dict((ord(char), None) for char in string.punctuation)
+def fuzzratio(text1, text2):
+    return int(fuzz.ratio(text1, text2) / 10)
 
-def stem_tokens(tokens):
-    return [lemmatizer.lemmatize(item) for item in tokens]
+def spacy_similarity(text1, text2):
+    doc1 = nlp(text1)
+    doc2 = nlp(text2)
 
-def normalize(text):
-    return stem_tokens(nltk.word_tokenize(text.lower().translate(remove_punctuation_map)))
+    return min(10, math.ceil(doc1.similarity(doc2) * 10))
 
-vectorizer = TfidfVectorizer(tokenizer=normalize, stop_words='english')
+def evaluate(text1, text2):
+    score = np.mean(np.array([spacy_similarity(text1, text2), fuzzratio(text1, text2)]))
 
-def cosine_sim(text1, text2):
-    try:
-        tfidf = vectorizer.fit_transform([text1, text2])
-        return math.ceil((tfidf * tfidf.T).A[0, 1] * 10)
-    except Exception as e:
-        print(e)
-        return 0
+    return min(10, math.ceil(score))
