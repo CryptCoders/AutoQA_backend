@@ -10,4 +10,5 @@ def extract(file):
 
         return text
     except Exception as e:
-        return
+        print(e)
+        return ""

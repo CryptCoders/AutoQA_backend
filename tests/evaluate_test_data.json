@@ -1,0 +1,274 @@
+{
+    "test_cases": [
+        {
+            "Test Case ID": 1,
+            "Description": "Identical sentences",
+            "Input": [
+                "Hello, how are you?",
+                "Hello, how are you?"
+            ],
+            "Expected Output": 10
+        },
+        {
+            "Test Case ID": 2,
+            "Description": "Single word similarity",
+            "Input": [
+                "Apple",
+                "Apple"
+            ],
+            "Expected Output": 10
+        },
+        {
+            "Test Case ID": 3,
+            "Description": "Similar sentences",
+            "Input": [
+                "The weather is nice today.",
+                "The weather is pleasant today."
+            ],
+            "Expected Output": 8
+        },
+        {
+            "Test Case ID": 4,
+            "Description": "Contrasting sentences",
+            "Input": [
+                "The food was good.",
+                "The food was bad."
+            ],
+            "Expected Output": 5
+        },
+        {
+            "Test Case ID": 5,
+            "Description": "Different subjects",
+            "Input": [
+                "I like cats.",
+                "He likes dogs."
+            ],
+            "Expected Output": 5
+        },
+        {
+            "Test Case ID": 6,
+            "Description": "Different expressions",
+            "Input": [
+                "A penny for your thoughts.",
+                "What's on your mind?"
+            ],
+            "Expected Output": 5
+        },
+        {
+            "Test Case ID": 7,
+            "Description": "Related sentences",
+            "Input": [
+                "The bank is closed.",
+                "I need to deposit money in the bank."
+            ],
+            "Expected Output": 7
+        },
+        {
+            "Test Case ID": 8,
+            "Description": "Typos",
+            "Input": [
+                "I love Python.",
+                "I lvoe Pytohn."
+            ],
+            "Expected Output": 5
+        },
+        {
+            "Test Case ID": 9,
+            "Description": "Similar sentence structures",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The brown fox jumps over the dog."
+            ],
+            "Expected Output": 6
+        },
+        {
+            "Test Case ID": 10,
+            "Description": "Sentence length difference",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The quick brown fox jumps over the extremely lazy dog."
+            ],
+            "Expected Output": 8
+        },
+        {
+            "Test Case ID": 11,
+            "Description": "Word order difference",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The jumps dog brown lazy fox over quick the."
+            ],
+            "Expected Output": 5
+        },
+        {
+            "Test Case ID": 12,
+            "Description": "Word order difference",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The brown fox quick jumps over the lazy dog."
+            ],
+            "Expected Output": 6
+        },
+        {
+            "Test Case ID": 13,
+            "Description": "Punctuation difference",
+            "Input": [
+                "Hello, how are you?",
+                "Hello how are you"
+            ],
+            "Expected Output": 7
+        },
+        {
+            "Test Case ID": 14,
+            "Description": "Case difference",
+            "Input": [
+                "Hello, how are you?",
+                "hello, HOW ARE YOU?"
+            ],
+            "Expected Output": 7
+        },
+        {
+            "Test Case ID": 15,
+            "Description": "Different languages",
+            "Input": [
+                "Hello, how are you?",
+                "Bonjour, comment ça va?"
+            ],
+            "Expected Output": 5
+        },
+        {
+            "Test Case ID": 16,
+            "Description": "Emoji usage",
+            "Input": [
+                "I'm happy.",
+                "I'm ecstatic 😃."
+            ],
+            "Expected Output": 8
+        },
+        {
+            "Test Case ID": 17,
+            "Description": "URL inclusion",
+            "Input": [
+                "Visit us at www.example.com.",
+                "Visit www.example.com for more information."
+            ],
+            "Expected Output": 7
+        },
+        {
+            "Test Case ID": 18,
+            "Description": "Sentence length difference",
+            "Input": [
+                "This is a short sentence.",
+                "This is a very long sentence that never seems to end."
+            ],
+            "Expected Output": 8
+        },
+        {
+            "Test Case ID": 19,
+            "Description": "Empty sentences",
+            "Input": [
+                "",
+                ""
+            ],
+            "Expected Output": 10
+        },
+        {
+            "Test Case ID": 20,
+            "Description": "Similar sentences",
+            "Input": [
+                "Flowchart is a pictorial representation",
+                "Flowchart is a graphical representation"
+            ],
+            "Expected Output": 8
+        },
+        {
+            "Test Case ID": 21,
+            "Description": "Related sentences",
+            "Input": [
+                "DNA is used to grant or revoke permissions to database objects.",
+                "Permissions to database objects are granted or revoked using database objects"
+            ],
+            "Expected Output": 7
+        },
+        {
+            "Test Case ID": 22,
+            "Description": "Identical sentences",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The quick brown fox jumps over the lazy dog."
+            ],
+            "Expected Output": 10
+        },
+        {
+            "Test Case ID": 23,
+            "Description": "Different sentence structures",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The lazy dog is jumped over by the quick brown fox."
+            ],
+            "Expected Output": 6
+        },
+        {
+            "Test Case ID": 24,
+            "Description": "Word order difference",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The jumps dog brown lazy fox over quick the."
+            ],
+            "Expected Output": 5
+        },
+        {
+            "Test Case ID": 25,
+            "Description": "Word order difference",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The brown fox quick jumps over the lazy dog."
+            ],
+            "Expected Output": 6
+        },
+        {
+            "Test Case ID": 26,
+            "Description": "Different sentence structures",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The dog is jumped over by the quick brown fox."
+            ],
+            "Expected Output": 6
+        },
+        {
+            "Test Case ID": 27,
+            "Description": "Different sentence structures",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The brown fox jumps over the dog."
+            ],
+            "Expected Output": 6
+        },
+        {
+            "Test Case ID": 28,
+            "Description": "Word order difference",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The jumps dog brown lazy fox over quick the."
+            ],
+            "Expected Output": 5
+        },
+        {
+            "Test Case ID": 29,
+            "Description": "Different sentence structures",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The dog is jumped over by the quick brown fox."
+            ],
+            "Expected Output": 6
+        },
+        {
+            "Test Case ID": 30,
+            "Description": "Word order difference",
+            "Input": [
+                "The quick brown fox jumps over the lazy dog.",
+                "The brown fox quick jumps over the lazy dog."
+            ],
+            "Expected Output": 6
+        }
+    ]
+}
