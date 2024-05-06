@@ -12,6 +12,7 @@ CORS(app)
 api = Api(app)
 
 api.add_resource(GenerateQuestionAnswers, '/generate-question-answers/<string:bloom_level>')
+# api.add_resource(EvaluateAnswers, '/evaluate-answer')
 
 if __name__ == '__main__':
     app.run(debug = True)
