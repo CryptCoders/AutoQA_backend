@@ -4,13 +4,22 @@ from langchain.prompts import PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
 from langchain_community.docstore.document import Document
 from langchain_community.document_loaders import PyPDFLoader
+from enum import Enum
+
+import os
+api_key = os.getenv("GOOGLE_API_QUESTION_KEY")
 
 file_content = ""
+
+class BloomPrompt(Enum):
+    REMEMBER = "level 1 (remember)"
+    UNDERSTAND = "level 2 (understand)"
+    APPLY = "level 3 (apply)"
 
 def loadLLM():
     llm = GoogleGenerativeAI(
         model="gemini-pro",
-        google_api_key="AIzaSyAiIh4uO1L9EcD-jqb4D9cn6BwggbcZwwM"
+        google_api_key=api_key
     )
 
     return llm
@@ -46,22 +55,22 @@ def fileProcessing(file):
 
     return document_ques_gen, document_answer_gen
 
-def llm_pipeline(file):
+def llm_pipeline(file, bloom_level):
     document_ques_gen, document_ans_gen = fileProcessing(file)
 
     llm_ques_gen_pipeline = loadLLM()
 
-    prompt_template = """
+    prompt_template = f"""
         You are an expert at creating questions based on technical documents and materials.
         Your goal is to prepare an engineering student for their examinations.
         You do this by asking questions about the text below:
 
         ------------
-        {text}
+        {{text}}
         ------------
 
-        Generate questions based on the specifications of bloom's taxonomy level 3 (apply) on this text.
-        Make sure you generate only level 3 (apply) questions and not anything else.
+        Generate questions based on the specifications of bloom's taxonomy {BloomPrompt[bloom_level].value} on this text.
+        Make sure you generate only {BloomPrompt[bloom_level].value} questions and not anything else.
         Make sure not to lose any important information.
 
         QUESTIONS:
@@ -83,6 +92,6 @@ def llm_pipeline(file):
     filteredQuesList = [element for element in quesList if element.endswith('?') or element.endswith('.')]
     return filteredQuesList
 
-def generateQuestions(file):
-    quesList = llm_pipeline(file)
+def generateQuestions(file, bloom_level):
+    quesList = llm_pipeline(file, bloom_level)
     return file_content, quesList

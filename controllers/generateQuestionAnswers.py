@@ -10,13 +10,14 @@ class GenerateQuestionAnswers(Resource):
         file = request.files.get('file')
         file.save('temp.pdf')
 
-        file_content, questions = generateQuestions('temp.pdf')
+        file_content, questions = generateQuestions('temp.pdf', bloom_level.upper())
         api_keys = os.getenv("GOOGLE_API_KEYS").split(',')
 
         response = []
 
         api_queue = queue.Queue()
         for api_key in api_keys:
+            print(api_key)
             api_queue.put(api_key)
 
         keys_lock = threading.Lock()
