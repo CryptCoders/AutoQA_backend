@@ -1,8 +1,11 @@
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
+import dotenv
 
 from controllers.generateQuestionAnswers import GenerateQuestionAnswers
+
+dotenv.load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
