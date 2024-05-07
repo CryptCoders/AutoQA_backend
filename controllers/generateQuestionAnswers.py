@@ -12,13 +12,11 @@ class GenerateQuestionAnswers(Resource):
     def post(bloom_level):
         file = request.files.get('file')
         filename = file.filename.lower()
+
         if filename.endswith(('.pdf')):
-            
             file.save('temp.pdf')
         else:
-            # Handle other file types (video)
             extracted_content = extract_from_video(file)
-            
 
         file_content, questions = generateQuestions('temp.pdf', bloom_level.upper())
         api_keys = os.getenv("GOOGLE_API_KEYS").split(',')
@@ -28,7 +26,6 @@ class GenerateQuestionAnswers(Resource):
 
         # Populate the API queue with available keys
         for api_key in api_keys:
-            print(api_key)
             api_queue.put(api_key)
 
         def process_question(question):
@@ -69,4 +66,4 @@ class GenerateQuestionAnswers(Resource):
             thread.join()
 
         # Return the response as JSON
-        return jsonify({'data': response})
+        return jsonify({ 'data': response })
