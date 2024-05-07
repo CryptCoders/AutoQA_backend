@@ -24,24 +24,28 @@ def loadLLM():
 
     return llm
 
-def fileProcessing(file):
+def fileProcessing(file, ocr):
     global file_content
-    loader = PyPDFLoader(file)
-    data = loader.load()
 
-    question_gen = ''
+    if file == 'temp.pdf' and not ocr:
+        loader = PyPDFLoader(file)
+        data = loader.load()
 
-    for page in data:
-        question_gen += page.page_content
+        question_gen = ''
 
-    file_content = question_gen
+        for page in data:
+            question_gen += page.page_content
+
+        file_content = question_gen
+    else:
+        file_content = file
 
     splitter_ques_gen = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=100
     )
 
-    chunk_ques_gen = splitter_ques_gen.split_text(question_gen)
+    chunk_ques_gen = splitter_ques_gen.split_text(file_content)
     document_ques_gen = [Document(page_content=t) for t in chunk_ques_gen]
 
     splitter_ans_gen = RecursiveCharacterTextSplitter(
@@ -55,14 +59,15 @@ def fileProcessing(file):
 
     return document_ques_gen, document_answer_gen
 
-def llm_pipeline(file, bloom_level):
-    document_ques_gen, document_ans_gen = fileProcessing(file)
+def llm_pipeline(file, bloom_level, ocr):
+    document_ques_gen, document_ans_gen = fileProcessing(file, ocr)
 
     llm_ques_gen_pipeline = loadLLM()
 
     prompt_template = f"""
         You are an expert at creating questions based on technical documents and materials.
         Your goal is to prepare an engineering student for their examinations.
+        You need to generate as many questions as possible.
         You do this by asking questions about the text below:
 
         ------------
@@ -92,6 +97,6 @@ def llm_pipeline(file, bloom_level):
     filteredQuesList = [element for element in quesList if element.endswith('?') or element.endswith('.')]
     return filteredQuesList
 
-def generateQuestions(file, bloom_level):
-    quesList = llm_pipeline(file, bloom_level)
+def generateQuestions(file, bloom_level, ocr):
+    quesList = llm_pipeline(file, bloom_level, ocr)
     return file_content, quesList

@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-api.add_resource(GenerateQuestionAnswers, '/generate-question-answers/<string:bloom_level>')
+api.add_resource(GenerateQuestionAnswers, '/generate-question-answers/<string:bloom_level>/<int:ocr>')
 # api.add_resource(EvaluateAnswers, '/evaluate-answer')
 
 if __name__ == '__main__':
