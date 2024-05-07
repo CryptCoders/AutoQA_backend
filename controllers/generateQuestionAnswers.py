@@ -6,19 +6,25 @@ from flask_restful import Resource
 from utils.generateQuestions import generateQuestions
 from utils.generateAnswers import generateAnswer
 from utils.video import extract_from_video
+from utils.ocr import extract_text_from_pdf
 
 class GenerateQuestionAnswers(Resource):
     @staticmethod
-    def post(bloom_level):
+    def post(bloom_level, ocr):
         file = request.files.get('file')
         filename = file.filename.lower()
 
+        extracted_content = 'temp.pdf'
+
         if filename.endswith(('.pdf')):
-            file.save('temp.pdf')
+            if not ocr:
+                file.save('temp.pdf')
+            else:
+                extracted_content = extract_text_from_pdf('temp.pdf')
         else:
             extracted_content = extract_from_video(file)
 
-        file_content, questions = generateQuestions('temp.pdf', bloom_level.upper())
+        file_content, questions = generateQuestions(extracted_content, bloom_level.upper(), ocr)
         api_keys = os.getenv("GOOGLE_API_KEYS").split(',')
 
         response = []
@@ -35,13 +41,15 @@ class GenerateQuestionAnswers(Resource):
                     api_key = api_queue.get(block=True)
 
                     # Generate answer using the acquired API key
-                    answer = generateAnswer(file_content, question, api_key)
+                    answer, keywords = generateAnswer(file_content, question, api_key)
                     print("Question :\n",question)
                     print("Answer :\n",answer)
+                    print("Keywords :\n",keywords.split('\n'))
                     # Append the question-answer pair to the response list
                     response.append({
                         "question": question,
-                        "answer": answer
+                        "answer": answer,
+                        "keywords": keywords.split('\n')
                     })
 
                     # Mark the API key as available again by putting it back into the queue
