@@ -15,7 +15,3 @@ def extract_from_video(file):
     model = whisper.load_model('tiny')
     result = model.transcribe(r'./audio_mp3.wav')
     return result['text']
-
-if __name__ == "__main__":
-    with open(r'F:\autoQA\video1.mp4', 'rb+') as f:
-        print(extract_from_video(f))

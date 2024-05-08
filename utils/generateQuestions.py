@@ -86,7 +86,6 @@ def llm_pipeline(file, bloom_level, ocr):
     ques_gen_chain = load_summarize_chain(
         llm=llm_ques_gen_pipeline,
         chain_type="stuff",
-        verbose=True,
         prompt=PROMPT_QUESTIONS
     )
 

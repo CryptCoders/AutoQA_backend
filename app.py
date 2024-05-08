@@ -4,6 +4,7 @@ from flask_cors import CORS
 import dotenv, os
 
 from controllers.generateQuestionAnswers import GenerateQuestionAnswers
+from controllers.performEvaluation import EvaluateAnswers
 
 dotenv.load_dotenv()
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -13,7 +14,7 @@ CORS(app)
 api = Api(app)
 
 api.add_resource(GenerateQuestionAnswers, '/generate-question-answers/<string:bloom_level>/<int:ocr>')
-# api.add_resource(EvaluateAnswers, '/evaluate-answer')
+api.add_resource(EvaluateAnswers, '/evaluate-answer')
 
 if __name__ == '__main__':
     app.run(debug = True)
