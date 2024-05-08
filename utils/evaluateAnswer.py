@@ -38,8 +38,20 @@ def llm_pipeline(question, desired_answer, user_answer):
         input = question
     )
 
+    print(score)
     return score
 
 def evaluate(question, desired_answer, user_answer):
     score = llm_pipeline(question, desired_answer, user_answer)
     return score['score']
+
+if __name__ == '__main__':
+    evaluate(
+        "Explain the primary purpose of a computer network",
+        """	
+            The primary purpose of a computer network is to facilitate communication and resource sharing among multiple devices connected to it. By establishing connections between devices, networks enable the exchange of data, access to shared resources, and collaboration among users. Networks allow devices to communicate and share resources regardless of their physical location or the type of device they are using.
+        """,
+        """	
+            The primary purpose of a computer network is to facilitate communication and resource sharing among multiple devices connected to it. By establishing connections between devices, networks enable the exchange of data, access to shared resources, and collaboration among users. Networks allow devices to communicate and share resources regardless of their physical location or the type of device they are using.
+        """
+    )
