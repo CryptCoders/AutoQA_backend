@@ -1,23 +1,25 @@
 from langchain_google_genai import GoogleGenerativeAI
-from langchain.evaluation import load_evaluator, EvaluatorType
+from langchain.evaluation import load_evaluator
 
 import os
 api_key = os.getenv("GOOGLE_API_QUESTION_KEY")
 
 scoring_criteria = """
     "Score Scale: 1-10
-    
+
     Criteria:
-    
+
     Accuracy: How well does the response correspond to factual information? (Weight: 0.6)
-    Relevance: Does the response directly address the prompt or question? (Weight: 0.3)
-    Completeness: Does the answer provide all necessary details? (Weight: 0.1)
-    
-    1: Completely irrelevant or inaccurate
-    2-3: Somewhat relevant but with significant inaccuracies
-    4-6: Moderately relevant with minor inaccuracies or missing details
-    7-8: Mostly relevant and accurate, with some room for improvement
-    9-10: Perfect answer - highly relevant, accurate, complete, and informative
+    Relevance: Does the response directly address the prompt or question? (Weight: 0.4)
+    Completeness: Does the answer provide all necessary details? (Weight: 0.0)
+
+    Based on how much the relevance of the prediction give score:
+
+    Score 0-1: The prediction is completely unrelated to the reference.
+    Score 2-4: The prediction has minor relevance but does not align with the reference.
+    Score 5-7: The prediction has moderate relevance but contains inaccuracies.
+    Score 8-9: The prediction aligns with the reference but has minor errors.
+    Score 10: The prediction is completely and exactly aligns perfectly with the reference.
 """
 
 def loadLLM():
@@ -30,7 +32,7 @@ def loadLLM():
 
 def llm_pipeline(question, desired_answer, user_answer):
     llm_evaluate_pipeline = loadLLM()
-    evaluator = load_evaluator(evaluator = EvaluatorType.LABELED_SCORE_STRING, scoring_criteria = scoring_criteria, llm = llm_evaluate_pipeline)
+    evaluator = load_evaluator("labeled_score_string", criteria = scoring_criteria, llm = llm_evaluate_pipeline)
 
     score = evaluator.evaluate_strings(
         prediction = user_answer,
